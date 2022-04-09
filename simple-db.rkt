@@ -7,9 +7,9 @@
             (begin 
                 (if (empty? records)
                     (set! records cd)
-                    (set! records (list cd records)))))
+                    (set! records (cons cd records)))))
         (define/public (display-all)
-            (for/last ([cd records])
+            (for/last ([cd (flatten (list records))])
                 (printf "Title:  ~a\nArtist: ~a\nRating: ~a\nRipped: ~a\n\n" 
                     (get-field title cd) 
                     (get-field artist cd) 
