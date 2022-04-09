@@ -29,8 +29,7 @@
         (define/public (load)
             (let ([input (port->string (open-input-file "./db"))])
                 (for/last ([cd (input)])
-                    (displayln (string->list (car cd) (caar cd) (caaar cd) (caaaar cd)))
-                    (add-record (make-cd (string->list cd))))))
+                    (add-record (make-cd cd)))))
     (super-new)))
 
 (define *DB* (make-object db%))
