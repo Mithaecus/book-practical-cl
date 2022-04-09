@@ -34,20 +34,20 @@
                                  (second cd)       ; Artist
                                  (third cd)        ; Rating
                                  (fourth cd))))))  ; Ripped
+        (define/public (select-by-artist artist)
+            (let ([results '()])
+                (for ([cd (flatten (list records))])
+                    (if (equal? (get-field artist cd) artist)
+                        (set! results (cons cd results))
+                        (void)))
+                results))
     (super-new)))
 
 (define *DB* (make-object db%))
 
 (let loop ()
-    (display "Load? ")
-    (define load? (read-line (current-input-port) 'any))
-
-    (if (or (equal? load? "Y")
-            (equal? load? "Yes")
-            (equal? load? "y")
-            (equal? load? "yes"))
-        (send *DB* load)
-        (void))
+    
+    (send *DB* load)
 
     (display "Let's add a CD!\n")
     (display "Title: ")
