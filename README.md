@@ -1,1 +1,1 @@
-# book-practical-cl
+# Practical Common Lisp (in Racket)
