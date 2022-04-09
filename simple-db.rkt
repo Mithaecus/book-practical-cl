@@ -27,15 +27,18 @@
                     (open-output-file "./db" #:exists 'append))
             (close-output-port (open-output-file "./db" #:exists 'append))))
         (define/public (load)
-            (let ([input (port->string (open-input-file "./db"))])
-                (for/last ([cd (input)])
-                    (add-record (make-cd cd)))))
+            (let ([input (file->list "./db")])
+                (for ([cd input])
+                    (add-record 
+                        (make-cd (first cd)        ; Title
+                                 (second cd)       ; Artist
+                                 (third cd)        ; Rating
+                                 (fourth cd))))))  ; Ripped
     (super-new)))
 
 (define *DB* (make-object db%))
 
 (let loop ()
-
     (display "Load? ")
     (define load? (read-line (current-input-port) 'any))
 
