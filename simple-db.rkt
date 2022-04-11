@@ -14,17 +14,17 @@
                     (set! records cd)
                     (set! records (cons cd records)))))
         (define/public (dump-all)
-            (open-output-file "./db" #:exists 'replace)
+            (open-output-file "./data/db" #:exists 'replace)
             (for/last ([cd (flatten (list records))])
                 (write (
                     list (get-field title cd) 
                          (get-field artist cd) 
                          (get-field rating cd) 
                          (get-field ripped cd)) 
-                    (open-output-file "./db" #:exists 'append))
-            (close-output-port (open-output-file "./db" #:exists 'append))))
+                    (open-output-file "./data/db" #:exists 'append))
+            (close-output-port (open-output-file "./data/db" #:exists 'append))))
         (define/public (load)
-            (let ([input (file->list "./db")])
+            (let ([input (file->list "./data/db")])
                 (for ([cd input])
                     (add-record 
                         (new cd% [title (first cd)]
