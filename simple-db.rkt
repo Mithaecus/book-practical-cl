@@ -5,9 +5,6 @@
         (init-field title artist rating ripped)
     (super-new)))
 
-(define (make-cd title artist rating ripped)
-    (new cd% [title title] [artist artist] [rating rating] [ripped ripped]))
-
 (define db%
     (class object%
         (init-field [records '()])
@@ -30,10 +27,10 @@
             (let ([input (file->list "./db")])
                 (for ([cd input])
                     (add-record 
-                        (make-cd (first cd)        ; Title
-                                 (second cd)       ; Artist
-                                 (third cd)        ; Rating
-                                 (fourth cd))))))  ; Ripped
+                        (new cd% [title (first cd)]
+                                 [artist (second cd)]
+                                 [rating (third cd)]
+                                 [ripped (fourth cd)]))))) 
         (define/public (select-by-artist artist)
             (let ([results '()])
                 (for ([cd (flatten (list records))])
@@ -62,9 +59,12 @@
     (display "Ripped: ")
     (define ripped (read-line (current-input-port) 'any))
 
-    (define cd (make-cd title artist rating ripped))
+    (send *DB* add-record 
+        (new cd% [title title] 
+                 [artist artist] 
+                 [rating rating] 
+                 [ripped ripped]))
 
-    (send *DB* add-record cd)
     (send *DB* dump-all)
     
     (display "Quit? ")
